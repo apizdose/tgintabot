@@ -19,6 +19,6 @@ def send_echo(message):
         urljunk =  re.findall(r"\?.*",message.text)[0]
         url = message.text.replace(urljunk,"media?size=l")
         bot.send_message(message.chat.id, url)
-    except:bot.send_message(message.chat.id, "Something went wrong (")	        
+    except:bot.send_message(message.chat.id, "Something went wrong, send me photo link from intagram.")	        
 
 bot.polling( none_stop = True)
