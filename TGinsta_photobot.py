@@ -22,23 +22,26 @@ bot = telebot.TeleBot(TOKENTG)
 @bot.message_handler(content_types=['text'])
 @bot.edited_message_handler(content_types=['text'])
 def send_echo(message):
-    try:
-        urljunk =  re.findall(r"\?.*",message.text)[0]
-        url = message.text.replace(urljunk,"media?size=l")
-        bot.send_message(message.chat.id, url)
-    except:
-    	randm = random.randint(1, 9)
-    	if randm >= 2:
-	    	request = apiai.ApiAI(TOKENAI).text_request()
-	    	request.lang = 'ru'
-	    	request.session_id = 'AndryAI'
-	    	request.query = message.text
-	    	responseJson = json.loads(request.getresponse().read().decode('utf-8'))
-	    	response = responseJson['result']['fulfillment']['speech']
-	    	if response:
-	    		bot.send_message(message.chat.id, response)
-	    	else:
-	    		bot.send_message(message.chat.id, 'Кинь мне ссылку на пост в инсте, я ее переделаю.')	        
+
+    if "instagram.com" in message.text:
+        try:
+            urljunk =  re.findall(r"\?.*",message.text)[0]
+            url = message.text.replace(urljunk,"media?size=l")
+            bot.send_message(message.chat.id, url)
+        except:bot.send_message(message.chat.id, "Что-то не так с ссылкой.")
+    else:
+        randm = random.randint(1, 9)
+        if randm >= 2:
+                request = apiai.ApiAI(TOKENAI).text_request()
+                request.lang = 'ru'
+                request.session_id = 'AndryAI'
+                request.query = message.text
+                responseJson = json.loads(request.getresponse().read().decode('utf-8'))
+                response = responseJson['result']['fulfillment']['speech']
+                if response:
+                    bot.send_message(message.chat.id, response)
+                else:
+                    bot.send_message(message.chat.id, 'Кинь мне ссылку на пост в инсте, я ее переделаю.')	        
 
 @bot.message_handler(content_types=['sticker'])
 def sticker_handler(message: Message):
