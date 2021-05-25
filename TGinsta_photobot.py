@@ -14,8 +14,9 @@ def tokenAIget():
     with open('tokenai.txt','r') as tokenfile:
         return tokenfile.read()        
 
-TOKENTG = tokenTGget()
-TOKENAI = tokenAIget()
+TOKENTG = tokenTGget().rstrip()
+TOKENAI = tokenAIget().rstrip()
+#TOKENAI = 'a2d9878a05c8452db4730acd1473e054'
 bot = telebot.TeleBot(TOKENTG)
 
 
